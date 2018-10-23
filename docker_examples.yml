@@ -1,0 +1,75 @@
+# why docker
+  - speed
+  - reduce the complixity
+
+# Docker Editions
+  - docker is no longer just a " container runtime"
+  - CE vs EE
+  - three majore types of installs 
+    - direct -> it means it runs on that supported OS kernel
+    - Mac/Win -> suit of tools including GUI/settings. Basiclly what happens in the background is a small
+                 virtual machine has to be started by docker to run the containers in.
+                 Docker isn't natively supported in MAc/Win10
+    - cloud -> AWS/Azure/Google.. comes with different options
+
+# Windows docker options
+  - two types, linux container and Windows containers
+  - the difference is the binaries are running 
+  - in this course, Linux containers
+  - on Win 10, uses Hyper-V with tiny linux VM to run Linux containers
+  - powerShell native
+  - for docker cli complion on powerShell, please check https://github.com/matt9ucci/DockerCompletion
+
+# Check our Docker install and Config
+  - containers are the fundamental building block of the docker toolkit
+  - cm : docker version
+  - cm : docker info
+  - mangement commands vs commands (both work)
+  - old commands vs new commands (docker run vs docker container run)
+  - old command -> docker <command> (option)
+  - new management command -> docker <command><sub-command> (option)
+  
+# Image vs Container
+  - image -> is the binaries, libs and source coud that make your application that you want to run
+  - container -> is an instance of the image running as process
+  - you can have many containers running off the same image 
+  - image registry
+
+# run Nginx container 
+  - cm : docker container run --publish 80:80 nginx
+      1. download image 'nginx' from docker hub
+      2. start a new container from that image
+      3. open port 80 on the host IP (left port) ** you can use any port **
+      4. routes that traffic to the container IP, port 80
+    
+  - cm : docker container run --publish 80:80 --detach nginx ( <detach> tells docker to run in the background)
+  - cm : docker container ls (only shows running containers)
+  - cm : docker container ls (only shows all containers)
+  - cm : docker container stop <container-id>
+  - cm : docker container run --publish 80:80 --detach --name webhost nginx
+  - cm: docker container logs webhost
+  - cm: docker container top webhost (top processes inside the container)
+  - cm: docker container rm -f 3ede76cf686f (-f to force container to stop)
+
+# What happens when we run a container 
+  - look for the image locally in image cache, doesn't find anything
+  - then looks in remote image repo
+  - dowlanod the latest version if we do not specify a version
+  - creates a new container based on that image
+  - gives it a virtual IP on a private network inside docker engine
+  - opnes up port on host and fowwards to port in container if we specify those ports
+  - starts container by using the commands in the image Dockerfile
+
+
+# Containers vs Virtual machines
+  - containers are just processes
+  - Limited to what resources they can access
+  - Exit when process stops
+  
+
+
+
+
+
+
+
