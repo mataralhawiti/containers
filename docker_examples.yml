@@ -160,3 +160,12 @@
 
 
 # Docker networks: DNS
+    - understand how DNS is the key to easy inter-container comms. we can't rely on IP inside 
+      containers since things are dynamic.
+    - difference between default and customer networks in regards to hwo they deal with DNS
+    - --link to enable DNS on default bridge network 
+    - Static IP's and using IP's for talking to containers is an anti-patern.
+    - there's built-in soltuion for DNS naming, and docker uses the container names 
+      as the equivalent of a host name for containers talking to each other.
+    - bridge network does not hae DNS server built-in into it by default so you need to use --link
+    - by default, when you create new container it will be attahced to a virtual newwork called "bridge" unless you specify different network 
