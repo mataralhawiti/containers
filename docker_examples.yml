@@ -154,3 +154,5 @@
     - cm : docker network connect 7bedb818377c 7270f26fd7f2 ( attahced a newwork to a container, now our container is attached to 2 networks)
     - cm : docker network connect <network> <container> ( attahced a newwork to a container )
     - cm : docker network disconnect 7bedb818377c 7270f26fd7f2 ( deattach a newwork from a container, now our container is attached to 1 networks only)
+
+
