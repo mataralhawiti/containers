@@ -108,6 +108,49 @@
     - cm : docker container exec -it mysql bash (start interactive insidign running container)
 
 # Docker networks : Concepts
+    - cm : docker container run -p (expose ports)
+    - docker has the comncept of batteries included but removable which basically means the defualts
+        are pretty easy and common to use, but you can change those defualts.
+    - cm : docker container port <container> (list open ports on your container)
 
+# Docker networks defaults :
+    - each container conncted to a private virtual network "bridge"
+    - each virtual netwrok routes through NAT firewall on host IP .
+        - basically Docker daemon configuring the host IP adresss on its default interface so that the containers get out
+          to the internet or to the rest of the network.
+    
+    - All containers on a virtual network can talk to each other without -P 
+    - best practice to create virtul network for each app. for example :-
+        - network "my_web_app" for mysql and php/apache containers
+        - network "my_api" for mongodb and node.js containers
+    - cm : docker container port webhost
+    - cm : docker container inspect --format '{{ .NetworkSettings.IPAddress }}' webhost (to get container IP)
+           - Notice how container IP is different from host IP
 
+# How Docker networks move packages  in and out :
+    - my host is connected to my network
+    - assuming it's a physical network
+    - we have Ethernet interface on my host machine
+    - there's a firewall on that interface that does a lot of stuff, for example, it bloacks all incoming traffic from network
+      so by defualt everthing is bloacked.
+    - Any traffic coming from my container would be NAT-ed by default.
+    - there's a concept called virtual network and by default you'll see network called "bridge" or "Docker0"
+    - when you start new container "container_1", the container is attached to the "bridge" network. and that virtual network
+      is automatically attahced to our Ethernet interfaceon our host.
+    - on any interface on your host, you can't listen on more than one port for Multiple containers.
 
+# Docker networks: CLI management
+    - cm : docker network ls (show networks)
+    - cm : docker network inspect (inspect a network)
+    - cm : docker network create --network (create a network)
+    - cm : docker network connect (attache a network to a container)
+    - cm : docker network disconnect (deattahce a network from a container)
+
+    - there's a spcial network called "host" when you do (docker network ls) it skips the virtual network of Docker
+      and attahce the container directly to the host interface. therte are pros/cons
+
+    - cm : docker network create my_app_nt
+    - cm : docker container run -d --name my_nginx --network my_app_nt nginx (create a new container on a speific network)
+    - cm : docker network connect 7bedb818377c 7270f26fd7f2 ( attahced a newwork to a container, now our container is attached to 2 networks)
+    - cm : docker network connect <network> <container> ( attahced a newwork to a container )
+    - cm : docker network disconnect 7bedb818377c 7270f26fd7f2 ( deattach a newwork from a container, now our container is attached to 1 networks only)
