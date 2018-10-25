@@ -1,5 +1,6 @@
 #   --> Docker Mastery: The Complete Toolset From a Docker Captain <-- #
 #      --> https://www.udemy.com/docker-mastery/ <--
+# great --> https://www.youtube.com/watch?v=EnJ7qX9fkcU --<
 
 # why docker
     - speed
@@ -169,3 +170,46 @@
       as the equivalent of a host name for containers talking to each other.
     - bridge network does not hae DNS server built-in into it by default so you need to use --link
     - by default, when you create new container it will be attahced to a virtual newwork called "bridge" unless you specify different network 
+
+# what's a container images and what's not
+    - app binaries and dependencies 
+    - metadata about the image data and how to run the image
+    - Not a complete OS. No kernel, no kernel modules (e.g. drivers)
+    - it's just the binaries that your app needs because the host provides the kernel. this one the distinct charas around
+      containers that makes it different from virtual machines, becuase container just runs the app doesn't 
+      boot a full OS like VM
+
+# Dokcer hubs, images :
+    - cm : docker pull nginx
+
+# Image lyers :
+    - image lyers
+    - union file system
+    - history and insoec t commands
+    - copy on write ***
+    - images are designed using the union file system concept of making layers about the changes.
+    - cm : docker image ls
+    - Cache concept in images. we don't need to downlaod layers we already have.
+    - Each layer has it's identiy as SHA (uniquely identified ) and only stored once on a host ( on docker deamon )
+    - a container is just a single read/write layer on top of image !!!
+    - cm : docker image history nginx ( to see changes on the image over time)
+    - cm : docker image inspect nginx ( show metadata )
+
+# Image tagging, pushing to docker hub
+    - cm : docker image tag nginx matar86/nginx ( tag an existing image )
+    - cm : docker login
+    - cm : docker image matar/nginx push
+
+# the Dockerfile basics
+
+
+# Buidling images : running docker builds
+    - cm :  docker image build -t customnginx . ( build docker image "customenginx" from Dockerfile in the current dir)
+    - docker gives each line in Dockerfile uniqe hash whichs very useful when we build same image again. Basiclly any unchange line 
+      will be skipped in next build which will save a lot of time and space.
+    
+    - let expose one more port in our Dockerfile then build new images.
+    - cm :  docker image build -t customnginx . ( now, it will use cache for each unchanged line)
+
+# Buidling images : extending offical images :
+    - cm : docker image build -t nginx-with-html .
