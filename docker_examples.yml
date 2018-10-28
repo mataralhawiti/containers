@@ -213,3 +213,25 @@
 
 # Buidling images : extending offical images :
     - cm : docker image build -t nginx-with-html .
+
+# build your docker image  :
+    - cm : docker image build -t testnode .
+    - cm : docker tag testnode matar86/testing-node
+    - cm : docker push matar86/testing-node
+    - cm : docker image rm matar86/testing-node (to remove it from local repo)
+    - cm : docker container run --rm -p 80:3000 matar86/testing-node ( pull it from docker hub)
+
+
+
+# Container lifetime and persistent data :
+    - defining the problem of persistent data
+    - key concepts with containers -> immutable, ephemeral
+    - Data volumes
+    - Bind mounts
+
+    - Containers are usually immutable and ephemeral -->
+        it means they are unchanging and temporary o disposal.
+        the idea here is that we can throw away a container and create a new one from an images.
+        so it's not an actuial Limition of containers, but more of a desgin goal or best practice.
+
+
