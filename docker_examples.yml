@@ -233,5 +233,22 @@
         it means they are unchanging and temporary o disposal.
         the idea here is that we can throw away a container and create a new one from an images.
         so it's not an actuial Limition of containers, but more of a desgin goal or best practice.
+        this is the idea of immutable infrasturcte where we don't change this once they're running. if config
+        chnage needed or maybe upgrade the container then we redeploy the whole containers. but there's a trade off
+        what about the data app produces or databaes ?
+        Ideally, the containers should not contain your unique data mixed in with the app binariies. This is known as
+        " separation of concerns "
+
+        -- unique data problem which is know as " presistant data ", when we remove container data isn't persistance and will be lost.
+            Docker has 2 uniqe solutions for this problem ->
+            1. volumes -> docker volumes are a config options for a contanier that creates specail locatopn outside
+                        the container's union file system to store unique data. it will just look like a local file path or dir path to the container
+            2. Bind mounts -> are simply us sharing or mounting a host directory or file into a containers.
+                              and it will just look like a local file path or dir path to the container.
+
+
+# Persistent data : Data volumes
+    - first way to tell contaier about "vloumes" is via VOLUME cmd in Dockerfile.
+
 
 
