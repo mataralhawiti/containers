@@ -249,6 +249,12 @@
 
 # Persistent data : Data volumes
     - first way to tell contaier about "vloumes" is via VOLUME cmd in Dockerfile.
-
+    - cm : docker volume ls
+    - when we remove containers, vlumes don't get removed. We need to remove them manually.
+    - nameed valumes --> frienly way to assign volumes to containers.
+    - cm : docker container run -d --name mysql -e MYSQL_ROOT_PASSWORD=True -v mysql-db:/var/lib/mysql mysql
+            (start the container with named volume)
+    - cm : docker volume ls
+    
 
 
