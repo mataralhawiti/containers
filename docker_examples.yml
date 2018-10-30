@@ -255,6 +255,16 @@
     - cm : docker container run -d --name mysql -e MYSQL_ROOT_PASSWORD=True -v mysql-db:/var/lib/mysql mysql
             (start the container with named volume)
     - cm : docker volume ls
+    - cm : docker volume create ... (we use it to create docker vlome ahead of time, it's not common )
     
+# Persistent data : Bind Mounting
+    - maps a host file or dir to a continaer file or dir
+    - basically 2 locations poiting to the same file(s)
+    - skpis UFS and host files overwrite any in container.
+    - can't use in Dockerfile, must be at container run
+    - cm : run -v //c/users/bret/stuffL/path/container (Windows)
+    - cm : docker contaier run -d --name nginx -p 80:80 -v $(pwd):/user/share/nginx/html nginx
+    
+
 
 
