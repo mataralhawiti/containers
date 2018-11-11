@@ -1,6 +1,7 @@
 #   --> Docker Mastery: The Complete Toolset From a Docker Captain <-- #
 #      --> https://www.udemy.com/docker-mastery/ <--
 # great --> https://www.youtube.com/watch?v=EnJ7qX9fkcU --<
+# docker comletion for PowerShell : https://github.com/matt9ucci/DockerCompletion
 
 # why docker
     - speed
@@ -265,6 +266,124 @@
     - cm : run -v //c/users/bret/stuffL/path/container (Windows)
     - cm : docker contaier run -d --name nginx -p 80:80 -v $(pwd):/user/share/nginx/html nginx
     
+
+# docker Compose :
+    - combination of command line tools and config file
+    - To config relationships between containers
+    - save our dcoker container run settings in easy-to-read file
+    - create one-liner dev env startup
+    - Docker Compose comprised of 2 separate but related things :->
+        - YAML-formatted file that describe solution options for 
+            - containers
+            - networks
+            - volumes
+            - images, env variables
+            - etc
+        - A CLI tool docker-compose used for local dev/test automation with those YAML files.
+
+# docker-compose.yml :
+    - compose YAML format has it's own versions 1,2, 1.2, and so on
+    - YAML file can be used with docker-compose commmand for locakl automation
+    - with Docker directly in prod with Swarm (as of V1.13, 2017)
+    - cm : docker-compose
+    - docker-compose.yml is defualt filename, but any can be used with docker-compose -f
+
+    - example 1
+        # same as 
+        # docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
+        version: '2'
+        services:
+        jekyll:
+            image: bretfisher/jekyll-serve
+            volumes:
+            - .:/site
+            ports:
+            - '80:4000'
+    
+    - example 2 :-> Multiple comtainers(services)
+        version: '2'
+
+        services:
+
+        wordpress:
+            image: wordpress
+            ports:
+            - 8080:80
+            environment:
+            WORDPRESS_DB_HOST: mysql
+            WORDPRESS_DB_NAME: wordpress
+            WORDPRESS_DB_USER: example
+            WORDPRESS_DB_PASSWORD: examplePW
+            volumes:
+            - ./wordpress-data:/var/www/html
+
+        mysql:
+            image: mariadb
+            environment:
+            MYSQL_ROOT_PASSWORD: examplerootPW
+            MYSQL_DATABASE: wordpress
+            MYSQL_USER: example
+            MYSQL_PASSWORD: examplePW
+            volumes:
+            - mysql-data:/var/lib/mysql
+
+        volumes:
+        mysql-data:
+            
+
+# docker-compose CLI
+    - cm : docker-compose up
+    - cm : docker-compose down
+
+
+# Adding image build to compose files
+    - docker-compose can build your images at runtime
+    - will build them with docker-compose up if not found in cache
+    - rebuild with docker-compose build
+        
+    - example
+        version: '2'
+
+        # based off compose-sample-2, only we build nginx.conf into image
+        # uses sample site from https://startbootstrap.com/template-overviews/agency/
+
+        services:
+        proxy:
+            build:
+            context: .
+            dockerfile: nginx.Dockerfile
+            ports:
+            - '80:80'
+        web:
+            image: httpd
+            volumes:
+            - ./html:/usr/local/apache2/htdocs/
+
+# docker-compose assignment 1/2 :
+    # create your drupal and postgres config here, based off the last assignment
+    version : '2'
+
+    services: 
+    drupal:
+        image: drupal
+        ports: 
+        - "8080:80"
+        volumes: 
+        - drupal-modules:/var/www/html/modules \
+        - drupal-profiles:/var/www/html/profiles \
+        - drupal-sites:/var/www/html/sites \
+        - drupal-themes:/var/www/html/themes \
+    postgres:
+        image: postgres
+        environment: 
+        - POSTGRES_PASSWORD=mypasswd
+
+    volumes: 
+    drupal-modules:
+    drupal-profiles:
+    drupal-sites:
+    drupal-themes:
+
 
 
 
