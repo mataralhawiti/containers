@@ -6,6 +6,7 @@
 # why docker
     - speed
     - reduce the complixity
+    - Is docker just continer runtime ?
 
 # Docker Editions
     - docker is no longer just a " container runtime"
@@ -341,17 +342,13 @@
     - will build them with docker-compose up if not found in cache
     - rebuild with docker-compose build
         
-    - example
+    - example (https://github.com/BretFisher/udemy-docker-mastery/tree/master/compose-sample-3)
         version: '2'
-
-        # based off compose-sample-2, only we build nginx.conf into image
-        # uses sample site from https://startbootstrap.com/template-overviews/agency/
-
         services:
         proxy:
             build:
-            context: .
-            dockerfile: nginx.Dockerfile
+                context: .
+                dockerfile: nginx.Dockerfile
             ports:
             - '80:80'
         web:
@@ -359,30 +356,27 @@
             volumes:
             - ./html:/usr/local/apache2/htdocs/
 
-# docker-compose assignment 1/2 :
-    # create your drupal and postgres config here, based off the last assignment
-    version : '2'
+# docker-compose assignment 1/2 (https://github.com/BretFisher/udemy-docker-mastery/tree/master/compose-assignment-2):
+    - cm : docker-compose up
+    - cm : docker-compose down -v
+    - cm : docker-compose down --rmi all
 
-    services: 
-    drupal:
-        image: drupal
-        ports: 
-        - "8080:80"
-        volumes: 
-        - drupal-modules:/var/www/html/modules \
-        - drupal-profiles:/var/www/html/profiles \
-        - drupal-sites:/var/www/html/sites \
-        - drupal-themes:/var/www/html/themes \
-    postgres:
-        image: postgres
-        environment: 
-        - POSTGRES_PASSWORD=mypasswd
+    - solution :-> check the (docker-compose.yml and Dockerfile) in the repo
 
-    volumes: 
-    drupal-modules:
-    drupal-profiles:
-    drupal-sites:
-    drupal-themes:
+
+
+# Swarm Mode : Built-iin Orchestration
+### I will skip Swarm part becuase I want to lear Kubernetes instead 
+    - how can we easily deploy and maintain our continers across tons of servers and instances ?
+    - how do we automate containers lifecycle ? (deployment, startin, restarting, upgrading, etc)
+    - how we scale out/in/up/down ?
+    - how we handle blue/green deploymwnt ?
+    - cross-nde network ?
+
+    - Swarm mode is clustering solution built inside docker
+    - not related to Swarm "classic" 
+    - Swarm mode is not enable by defualt
+
 
 
 
